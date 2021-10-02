@@ -1,7 +1,7 @@
 # Music bot for Discord
 
 Just a simple music bot capable of playing music from YouTube.
-Made using my [discord.js](discord.js) and my own "add on" for discord.js, [Skeleton](https://github.com/smultronbusken/skeleton-discord-bot).
+Made using my [discord.js](discord.js) and my own "add on" for discord.js, [base-app-for-discordjs](https://github.com/smultronbusken/base-app-for-discordjs).
 
 ## Commands
 
@@ -21,4 +21,40 @@ Made using my [discord.js](discord.js) and my own "add on" for discord.js, [Skel
 - [FFMpeg](https://ffmpeg.org/)
 
 ## Usage
-soon
+
+* Clone project
+* Create a config.json in the root folder that looks like: 
+
+```json
+{
+    "APP_TOKEN": "your app token",
+    "APP_ID": "your app id",
+    "DEV_GUILD_ID": "a guild for testing commands"
+}
+```
+
+* run `npm install`
+
+* run `ts-node src/main.ts`
+
+
+### Playlists
+
+If you want playlists then create a file `playlists.storage.json` that looks like
+
+```json
+{
+  "name": "playlists",
+  "Chill": [
+    "https://www.youtube.com/watch?v=LmUHFgNFRG0",
+    "https://www.youtube.com/watch?v=LmUHFgNFRG0",
+    "https://www.youtube.com/watch?v=LmUHFgNFRG0"
+  ],
+  "Hype": [
+    "https://www.youtube.com/watch?v=LmUHFgNFRG0",
+    "https://www.youtube.com/watch?v=LmUHFgNFRG0",
+    "https://www.youtube.com/watch?v=LmUHFgNFRG0"
+  ]
+}
+```
+
