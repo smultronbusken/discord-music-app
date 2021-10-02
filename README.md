@@ -22,8 +22,8 @@ Made using my [discord.js](discord.js) and my own "add on" for discord.js, [base
 
 ## Usage
 
-Clone project
-Create a config.json in the root folder that looks like: 
+* Clone project
+* Create a config.json in the root folder that looks like: 
 
 ```json
 {
@@ -33,9 +33,10 @@ Create a config.json in the root folder that looks like:
 }
 ```
 
-`npm install`
+* run `npm install`
 
-`ts-node src/main.ts`
+* run `ts-node src/main.ts`
+
 
 ### Playlists
 
