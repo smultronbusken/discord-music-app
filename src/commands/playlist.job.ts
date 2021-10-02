@@ -20,8 +20,18 @@ export default new SlashCommand<MusicApp>( {
     async execute(interaction, app) {
 
         let playlistName = interaction.options.getString("name")
-        let playlist: Array<string> = app.skeleton.getStorage("playlists").get(playlistName).value()
 
+        if (!app.skeleton.getStorage("playlists")) {
+            interaction.reply("There are no playlists")
+            return;
+        }
+
+        let playlist: Array<string> = app.skeleton.getStorage("playlists").get(playlistName)?.value()
+
+        if (!playlist) {
+            interaction.reply("That playlist does not exist")
+            return;
+        }
 
         let subscription = app.getSubscription(interaction.guildId)
         if (!subscription) {
