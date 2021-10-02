@@ -1,6 +1,6 @@
-# Music bot for Discord
+# Music app for Discord
 
-Just a simple music bot capable of playing music from YouTube.
+Just a simple music app capable of playing music from YouTube.
 Made using my [discord.js](discord.js) and my own "add on" for discord.js, [base-app-for-discordjs](https://github.com/smultronbusken/base-app-for-discordjs).
 
 ## Commands
