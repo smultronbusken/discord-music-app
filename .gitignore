@@ -1,4 +1,7 @@
 config.json
+src
+playlists.storage.json
+
 
 # Logs
 logs
