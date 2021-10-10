@@ -29,7 +29,7 @@ export default class MusicApp {
         let voiceConnection =  joinVoiceChannel({
             channelId: voiceChannel.id,
             guildId: voiceChannel.guild.id,
-            adapterCreator: voiceChannel.guild.voiceAdapterCreator,
+            adapterCreator: voiceChannel.guild.voiceAdapterCreator as any,
         });
         let subscription = new MusicSubscription(voiceConnection)
         this.subscriptions.set(guildId, subscription)
@@ -54,7 +54,7 @@ import("../config.json").then(config => {
         config["APP_TOKEN"],
         config["APP_ID"],
         intents,
-        config["DEV_GUILD_ID"]
+        config["DEV_GUILD_ID2"]
       );
       skeleton.client.login(config["APP_TOKEN"]);
       app.skeleton = skeleton
