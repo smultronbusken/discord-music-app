@@ -11,6 +11,9 @@ export default new SlashCommand<MusicApp>( {
             if (nextSong) {
                 subscription.playSong(nextSong)
                 interaction.reply(`🎶 Now playing **${nextSong.title}**`)
+            } else {
+                subscription.stop()
+                interaction.reply("Skipped.")
             }
         } 
     }
