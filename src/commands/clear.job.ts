@@ -10,6 +10,8 @@ export default new SlashCommand<MusicApp>({
         if (subscription) {
             subscription.queue = new Queue();
             interaction.reply("Cleared the queue.")
-        } 
+        } else {
+            interaction.reply("You need to play a song before using this.")
+        }
     }
 })

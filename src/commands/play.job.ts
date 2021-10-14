@@ -20,6 +20,7 @@ export default new SlashCommand<MusicApp>( {
         let song: any = {}
 
         let desiredSong = interaction.options.getString("songname")
+        interaction.reply('Searching for song.');
 
         //If the first argument is a link. Set the song object to have two keys. Title and URl.
         if (ytdl.validateURL(desiredSong)) {
@@ -38,7 +39,7 @@ export default new SlashCommand<MusicApp>( {
                 song = { title: video.title, url: video.url }
 
             } else {
-                interaction.reply('Error finding video.');
+                interaction.followUp('Error finding video.');
             }
         }
 
@@ -47,7 +48,7 @@ export default new SlashCommand<MusicApp>( {
             let subscription = app.getSubscription(interaction.guildId)
             if (subscription && !subscription.empty) {
                 subscription.queue.enqueue(song)
-                interaction.reply(`🎶 Queued **${song.title}**`)
+                interaction.followUp(`🎶 Queued **${song.title}**`)
             } else {
 
                 const guild = app.skeleton.client.guilds.cache.get(interaction.guildId)
@@ -55,7 +56,7 @@ export default new SlashCommand<MusicApp>( {
                 const voiceChannel = member.voice.channel;
 
                 app.playSongInGuild(song, interaction.guildId, voiceChannel)
-                interaction.reply(`🎶 Now playing **${song.title}**`)
+                interaction.followUp(`🎶 Now playing **${song.title}**`)
             }
     
             return 1

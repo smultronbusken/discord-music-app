@@ -21,15 +21,16 @@ export default new SlashCommand<MusicApp>( {
 
         let playlistName = interaction.options.getString("name")
 
+        interaction.reply("Queueing playlist...")
         if (!app.skeleton.getStorage("playlists")) {
-            interaction.reply("There are no playlists")
+            interaction.followUp("There are no playlists")
             return;
         }
 
         let playlist: Array<string> = app.skeleton.getStorage("playlists").get(playlistName)?.value()
 
         if (!playlist) {
-            interaction.reply("That playlist does not exist")
+            interaction.followUp("That playlist does not exist")
             return;
         }
 
@@ -49,7 +50,7 @@ export default new SlashCommand<MusicApp>( {
             if (ytdl.validateURL(url)) {
                 const song_info = await ytdl.getInfo(url);
                 song = { title: song_info.videoDetails.title, url: song_info.videoDetails.video_url }
-                interaction.channel.send(`🎶 Queued **${song.title}**`)
+                interaction.followUp(`🎶 Queued **${song.title}**`)
                 subscription.queue.enqueue({
                     url: song.url,
                     title: song.title
@@ -58,7 +59,7 @@ export default new SlashCommand<MusicApp>( {
         }
         let nextSong = subscription.queue.dequeue();
         subscription.playSong(nextSong)
-        interaction.reply(`🎶 Now playing **${nextSong.title}**`)
+        interaction.followUp(`🎶 Now playing **${nextSong.title}**`)
         
 
 

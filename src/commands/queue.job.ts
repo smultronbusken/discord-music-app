@@ -19,7 +19,7 @@ export default new SlashCommand<MusicApp>( {
                 }
             }
         } else {
-
+            interaction.reply("You need to play a song before using this.")
         }
         
 

@@ -15,6 +15,8 @@ export default new SlashCommand<MusicApp>( {
                 subscription.stop()
                 interaction.reply("Skipped.")
             }
-        } 
+        } else {
+            interaction.reply("You need to play a song before using this.")
+        }
     }
 })
