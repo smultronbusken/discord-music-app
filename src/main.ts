@@ -1,6 +1,7 @@
 import { Client, Collection, GatewayIntentBits, Snowflake, StageChannel, VoiceChannel } from "discord.js";
 import { Skeleton, SlashCommand, number } from 'skeleton.djs';
 import { Player, RepeatMode } from '@jadestudios/discord-music-player';
+import { songQueue } from "./embeds";
 
 export type AppContext = {
     player: Player,
@@ -13,6 +14,40 @@ import("../config.json").then(config => {
     const skeleton = new Skeleton();
     const client = new Client(intents);
     const player = new Player(client);
+    
+    player
+    // Emitted when channel was empty.
+    .on('channelEmpty',  (queue) =>
+        console.log(`Everyone left the Voice Channel, queue ended.`))
+    // Emitted when a song was added to the queue.
+    .on('songAdd',  (queue, song) =>
+        console.log(`Song ${song} was added to the queue.`))
+    // Emitted when a playlist was added to the queue.
+    .on('playlistAdd',  (queue, playlist) =>
+        console.log(`Playlist ${playlist} with ${playlist.songs.length} was added to the queue.`))
+    // Emitted when there was no more music to play.
+    .on('queueDestroyed',  (queue) =>
+        console.log(`The queue was destroyed.`))
+    // Emitted when the queue was destroyed (either by ending or stopping).    
+    .on('queueEnd',  (queue) =>
+        console.log(`The queue has ended.`))
+    // Emitted when a song changed.
+    .on('songChanged', (queue, newSong, oldSong) =>
+        console.log(`${newSong} is now playing.`))
+    // Emitted when a first song in the queue started playing.
+    .on('songFirst',  (queue, song) =>
+        console.log(`Started playing ${song}.`))
+    // Emitted when someone disconnected the bot from the channel.
+    .on('clientDisconnect', (queue) =>
+        console.log(`I was kicked from the Voice Channel, queue ended.`))
+    // Emitted when deafenOnJoin is true and the bot was undeafened
+    .on('clientUndeafen', (queue) =>
+        console.log(`I got undefeanded.`))
+    // Emitted when there was an error in runtime
+    .on('error', (error, queue) => {
+        console.log(`Error: ${error} in ${queue.guild.name}`);
+    });
+
     skeleton.addCommand(new SlashCommand(
         {
             name: "skip",
@@ -24,6 +59,21 @@ import("../config.json").then(config => {
         } 
     ));
     
+    skeleton.addCommand(new SlashCommand(
+        {
+            name: "queue",
+            description: "Shows the current song queue."
+        },
+        async (interaction, ctx) => {
+            let guildQueue = ctx.player.getQueue(interaction.guild.id);
+            if (guildQueue?.songs.length > 0) {
+                let embed = songQueue(guildQueue.songs)
+                interaction.reply({ embeds: [embed]});
+            }
+            interaction.reply("Queue empty.")
+        } 
+    ));
+
     skeleton.addCommand(new SlashCommand(
         {
             name: "stop",
@@ -79,7 +129,8 @@ import("../config.json").then(config => {
         },
         number({
             name: "volume",
-            description: "Set the volume"
+            description: "Set the volume",
+            required: true
         })
     ));
     
@@ -90,11 +141,12 @@ import("../config.json").then(config => {
         },
         async (interaction, ctx) => {
             let guildQueue = ctx.player.getQueue(interaction.guild.id);
-            guildQueue.seek(interaction.options.get('volume').value as number * 1000);
+            guildQueue.seek(interaction.options.get('seconds').value as number * 1000);
         },
         number({
             name: "seconds",
-            description: "Set the current time"
+            description: "Set the current time",
+            required: true
         })
     ));
     
@@ -153,7 +205,8 @@ import("../config.json").then(config => {
         },
         number({
             name: "index",
-            description: "Remove "
+            description: "Remove",
+            required: true
         })
     ));
     
