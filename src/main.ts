@@ -55,6 +55,7 @@ import("../config.json").then(config => {
         },
         async (interaction, ctx) => {
             let guildQueue = ctx.player.getQueue(interaction.guild.id);
+            if (guildQueue.songs.length > 0)
             guildQueue.skip();
         } 
     ));

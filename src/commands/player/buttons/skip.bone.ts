@@ -6,7 +6,10 @@ export default new ButtonCommand(
     },
     async (interaction, ctx) => {
         let guildQueue = ctx.player.getQueue(interaction.guild.id);
-        guildQueue.skip();
+        // if queue is empty doesnt work
+
+        if (guildQueue.songs.length > 0)
+            guildQueue.skip();
         interaction.deferUpdate();
     }
 )
